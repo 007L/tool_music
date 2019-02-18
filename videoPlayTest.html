@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>videoPlayTest</title>
+</head>
+<body style="margin: 0;padding: 0">
+<script src="common.js"></script>
+<script src="jquery.min.js"></script>
+<div style="font-size: .5rem;text-align: center">
+    <div class="navtitle" style="background: rgb(0,0,0);position: fixed;top: 0;color: #fff;line-height: 1.5rem;">
+        音频分类列表
+    </div>
+
+    <p style="margin-top: 12%" class="animal">动物百科</p>
+    <hr>
+    <p class="abc">ABC</p>
+    <hr>
+    <p class="astr">天文</p>
+    <hr>
+    <p class="earth">地球</p>
+    <hr>
+    <p class="worldhistory">世界历史</p>
+    <hr>
+    <p class="history">中国历史</p>
+    <hr>
+</div>
+
+<script>
+
+    $(".navtitle").css({
+        height:document.documentElement.clientHeight*.05 +"px",
+        width:document.documentElement.clientWidth+"px"
+    })
+
+    $(".animal").on("touchstart" ,function () {
+        window.location.href ="details.html?classification=animal"
+    })
+    $(".abc").on("touchstart" ,function () {
+        window.location.href ="details.html?classification=abc"
+    })
+    $(".astr").on("touchstart" ,function () {
+        window.location.href ="details.html?classification=astr"
+    })
+    $(".earth").on("touchstart" ,function () {
+        window.location.href ="details.html?classification=earth"
+    })
+    $(".worldhistory").on("touchstart" ,function () {
+        window.location.href ="details.html?classification=worldhistory"
+    })
+    $(".history").on("touchstart" ,function () {
+        window.location.href ="details.html?classification=history"
+    })
+
+
+
+</script>
+</body>
+</html>
