@@ -136,7 +136,7 @@
                 cardType:"ABC"
             },
             success: function (data) {
-                var getmistakeNo = window.localStorage.getItem("miatakeNo");
+                var getmistakeNo = JSON.parse(window.localStorage.getItem("miatakeNo"));
                 // var getmistakeNo = JSON.parse(window.localStorage.getItem("miatakeNo"));
                 // setInterval(function () {
                 //     getmistakeNo = window.localStorage.getItem("miatakeNo");
@@ -145,7 +145,7 @@
                 console.log(getmistakeNo);
                 // console.log(data.data);
                 var songInfo = [];
-                var storageMistake = [];
+                var storageMistake = getmistakeNo;
                 for(var i = 0;i<data.data.length;i++){
 
                     for(var k = 0;k<data.data[i].audios.length;k++){
@@ -171,15 +171,17 @@
 
                 console.log(storageMistake);
 
+
+                //点击图片外元素判断是否标记
                 $(".sgich_fr").on("touchstart" , function (e) {
                     console.log(e.target)
                     console.log($(e.target).find(" .imgnormal")[0].alt)
                     var alt = $(e.target).find(" .imgnormal")[0].alt
 
 
-                   if(JSON.parse(getmistakeNo) != [] || null){
+                   if(getmistakeNo != [] || null){
 
-                       for(var q = 0;q<JSON.parse(getmistakeNo).length;q++){
+                       for(var q = 0;q<getmistakeNo.length;q++){
                            if(getmistakeNo[q] ==$(e.target).find(" .imgnormal")[0].alt){
                        //         $(e.target).find(" .imgnormal").css({
                        //             display: "block"
