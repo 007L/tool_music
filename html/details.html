@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Title</title>
     <style>
         .back{
@@ -76,38 +79,15 @@
     </div>
     <div style="width: 100%;margin-top: 2rem" id="outAdd">
         <li class="u-song" id="inAdd" style="display: none;border-bottom: #4a5f77 solid 1px;">
-            <div class="sgi_fl" style="-ms-flex-align: center;
-            align-items: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            width: 40px;
-            font-size: .7rem;
-            color: #999;"></div>
-            <div class="sgi_fr f-bd f-bd-btm" style=" display: -ms-flexbox;
-                                                        display: flex;
-                                                        -ms-flex: 1 1 auto;
-                                                        flex: 1 1 auto;
-                                                        position: relative;
-                                                        border-bottom: #4a5f77 solid 1px;">
-                <div class="sgich_fl" id="textAll" style="-ms-flex: 1 1 auto;
-                                                            flex: 1 1 auto;
-                                                            padding: 6px 0;
-                                                            width: 0;">
+            <div class="sgi_fr f-bd f-bd-btm" style=" display: -ms-flexbox;display: flex;-ms-flex: 1 1 auto;flex: 1 1 auto;position: relative;border-bottom: #4a5f77 solid 1px;">
+                <div class="sgich_fl" id="textAll" style="-ms-flex: 1 1 auto;flex: 1 1 auto;padding: 6px 0;width: 0;">
                         <div class="f-thide sgich_tl" style=" font-size: .7rem;">$NO$. &nbsp;$cardName$</div>
-                        <div class="f-thide sgich_info" id="atturl" style="font-size: .5rem;
-                                                                            color: #888;">$attUrl$</div>
+                        <div class="f-thide sgich_info" id="atturl" style="font-size: .5rem;color: #888;">$attUrl$</div>
                 </div>
-                <div class="sgich_fr" style="display: -ms-flexbox;
-                                            display: flex;
-                                            -ms-flex-align: center;
-                                            align-items: center;
-                                            padding: 0 10px;">
-                    <span class="u-hmsprt sgich_ply" style="display: inline-block;
-                                                            width: 1rem;
-                                                            height: 1rem;
-                                                            background-position: 0 0;
-                                                            background: url(../img/play.png) no-repeat;
-                                                            background-size: 100% 100%;">
+                <div class="sgich_fr" style="display: -ms-flexbox;display: flex; -ms-flex-align: center;align-items: center;padding: 0 10px;">
+                    <img class="imgnormal" src="../img/mistake_normal.png" alt="$altNo$" style="width: 1rem;height: 1rem;margin-right: 1rem;position: relative;z-index: -1;">
+                    <img class="img" src="../img/mistake_.png" alt="$altNo1$" style="display: none;width: 1rem;height: 1rem;margin-right: 1rem;position: relative;z-index: -1;">
+                    <span class="u-hmsprt sgich_ply" style="display: inline-block;width: 1rem;height: 1rem;background-position: 0 0;background: url(../img/play.png) no-repeat;background-size: 100% 100%;">
                         <audio src="$audio$" id="audio"></audio>
                     </span>
                 </div>
@@ -143,6 +123,9 @@
         })
     }else if(classification =="abc"){
 
+
+
+
         $(".classification").append("abc")
         $.ajax({
             type: "post",
@@ -153,36 +136,86 @@
                 cardType:"ABC"
             },
             success: function (data) {
-                console.log(data.data);
+                var getmistakeNo = window.localStorage.getItem("miatakeNo");
+                // var getmistakeNo = JSON.parse(window.localStorage.getItem("miatakeNo"));
+                // setInterval(function () {
+                //     getmistakeNo = window.localStorage.getItem("miatakeNo");
+                // },100)
+
+                console.log(getmistakeNo);
+                // console.log(data.data);
                 var songInfo = [];
+                var storageMistake = [];
                 for(var i = 0;i<data.data.length;i++){
 
-
                     for(var k = 0;k<data.data[i].audios.length;k++){
-
                         songInfo.push(data.data[i].audios[k].attUrl)
+                        // storageMistake.push("");
+                        // var altNo =
                     }
-
                 }
-                console.log(songInfo);
-                console.log(songInfo.length);
-
                 // src.substring(7,10)
                 // str.substring(0, str.indexOf("#"));
-
                 for(var p = 0;p<songInfo.length;p++){
                     var s1 = $("#inAdd").html().replace("$NO$" , p+1).replace("$attUrl$" , songInfo[p].substring(18))
-                        .replace("$cardName$",(songInfo[p].substring(18)).substring(0, (songInfo[p].substring(18)).indexOf("/")))
-                        .replace("$audio$" , "http://www.dadpat.com"+songInfo[p]);
+                                                .replace("$altNo$" , p)
+                                                .replace("$altNo1$" , p)
+                                                .replace("$cardName$",(songInfo[p].substring(18)).substring(0, (songInfo[p].substring(18)).indexOf("/")))
+                                                .replace("$audio$" , "http://www.dadpat.com"+songInfo[p]);
                     $("#outAdd").append(s1);
                 }
 
                 $(".u-hmsprt").on("touchstart" , function (e) {
-                    console.log(e.target.getElementsByTagName("audio"))
-                    // var audio = e.target.getElementsByTagName("audio")
                     $(e.target).find("audio")[0].play()
-                    // $(".u-hmsprt").find("audio").play()
+                });
+
+                console.log(storageMistake);
+
+                $(".sgich_fr").on("touchstart" , function (e) {
+                    console.log(e.target)
+                    console.log($(e.target).find(" .imgnormal")[0].alt)
+                    var alt = $(e.target).find(" .imgnormal")[0].alt
+
+
+                   if(JSON.parse(getmistakeNo) != [] || null){
+
+                       for(var q = 0;q<JSON.parse(getmistakeNo).length;q++){
+                           if(getmistakeNo[q] ==$(e.target).find(" .imgnormal")[0].alt){
+                       //         $(e.target).find(" .imgnormal").css({
+                       //             display: "block"
+                       //         });
+                       //         $(e.target).find(".img").css({
+                       //             display: "none"
+                       //         });
+                                console.log("有一样的")
+                       //         console.log(getmistakeNo)
+                       //         var newstorageMistake =  getmistakeNo.splice(0,0);
+                       //
+                       //         window.localStorage.setItem("miatakeNo", JSON.stringify(newstorageMistake));
+                               return
+
+                           }
+
+
+                       }
+                   }
+
+                    $(e.target).find(" .imgnormal").css({
+                        display: "none"
+                    });
+                    $(e.target).find(".img").css({
+                        display: "block"
+                    });
+
+
+                    storageMistake.push(alt*1);
+                    window.localStorage.setItem("miatakeNo", JSON.stringify(storageMistake));
+
+                    console.log(storageMistake)
                 })
+
+
+
             }
         })
     }else if(classification =="astr"){
