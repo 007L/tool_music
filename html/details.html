@@ -142,10 +142,10 @@
                 //     getmistakeNo = window.localStorage.getItem("miatakeNo");
                 // },100)
 
-                console.log(getmistakeNo);
+                console.log(getmistakeNo==null);
                 // console.log(data.data);
                 var songInfo = [];
-                var storageMistake = getmistakeNo;
+                var storageMistake = getmistakeNo?getmistakeNo:[];
                 for(var i = 0;i<data.data.length;i++){
 
                     for(var k = 0;k<data.data[i].audios.length;k++){
@@ -174,12 +174,13 @@
 
                 //点击图片外元素判断是否标记
                 $(".sgich_fr").on("touchstart" , function (e) {
+                    getmistakeNo = JSON.parse(window.localStorage.getItem("miatakeNo"));
                     console.log(e.target)
                     console.log($(e.target).find(" .imgnormal")[0].alt)
                     var alt = $(e.target).find(" .imgnormal")[0].alt
 
 
-                   if(getmistakeNo != [] || null){
+                   if(getmistakeNo != null  ){
 
                        for(var q = 0;q<getmistakeNo.length;q++){
                            if(getmistakeNo[q] ==$(e.target).find(" .imgnormal")[0].alt){
