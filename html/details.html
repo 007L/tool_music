@@ -61,7 +61,7 @@
             background-position: 0 0;
         }
         .u-hmsprt {
-            background: url(./play.png) no-repeat;
+            background: url(../img/play.png) no-repeat;
             background-size: 100% 100%;
         }
 
@@ -69,21 +69,47 @@
     </style>
 </head>
 <body style="margin: 0;padding: 0">
-<script src="jquery.min.js"></script>
-<script src="common.js"></script>
-    <div class="classification" style="text-align: center;background: rgb(0,0,0);position: fixed;top: 0;color: #fff;line-height: 1.5rem;">
+<script src="../js/jquery.min.js"></script>
+<script src="../js/common.js"></script>
+    <div class="classification" style="text-align: center;background: rgb(0,0,0);position: fixed;top: 0;color: #fff;line-height: 1.5rem;z-index: 999;">
         <span class="back"><</span>
     </div>
     <div style="width: 100%;margin-top: 2rem" id="outAdd">
-        <li class="u-song" id="inAdd" style="display: none">
-            <div class="sgi_fl">$cardName$</div>
-            <div class="sgi_fr f-bd f-bd-btm">
-                <div class="sgich_fl" id="textAll">
-                        <!--<div class="f-thide sgich_tl"></div>-->
-                        <div class="f-thide sgich_info" id="atturl">$attUrl$</div>
+        <li class="u-song" id="inAdd" style="display: none;border-bottom: #4a5f77 solid 1px;">
+            <div class="sgi_fl" style="-ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: 40px;
+            font-size: .7rem;
+            color: #999;"></div>
+            <div class="sgi_fr f-bd f-bd-btm" style=" display: -ms-flexbox;
+                                                        display: flex;
+                                                        -ms-flex: 1 1 auto;
+                                                        flex: 1 1 auto;
+                                                        position: relative;
+                                                        border-bottom: #4a5f77 solid 1px;">
+                <div class="sgich_fl" id="textAll" style="-ms-flex: 1 1 auto;
+                                                            flex: 1 1 auto;
+                                                            padding: 6px 0;
+                                                            width: 0;">
+                        <div class="f-thide sgich_tl" style=" font-size: .7rem;">$NO$. &nbsp;$cardName$</div>
+                        <div class="f-thide sgich_info" id="atturl" style="font-size: .5rem;
+                                                                            color: #888;">$attUrl$</div>
                 </div>
-                <div class="sgich_fr">
-                    <span class="u-hmsprt sgich_ply"></span>
+                <div class="sgich_fr" style="display: -ms-flexbox;
+                                            display: flex;
+                                            -ms-flex-align: center;
+                                            align-items: center;
+                                            padding: 0 10px;">
+                    <span class="u-hmsprt sgich_ply" style="display: inline-block;
+                                                            width: 1rem;
+                                                            height: 1rem;
+                                                            background-position: 0 0;
+                                                            background: url(../img/play.png) no-repeat;
+                                                            background-size: 100% 100%;">
+                        <audio src="$audio$" id="audio"></audio>
+                    </span>
                 </div>
             </div>
         </li>
@@ -133,15 +159,30 @@
 
 
                     for(var k = 0;k<data.data[i].audios.length;k++){
-                        // var s = $("#atturl").html().replace("$attUrl$" , data.data[i].audios[k].attUrl)
-                        // var text2 = $("#textAll").append(s);
-                        songInfo.push(data.data[i].audios)
+
+                        songInfo.push(data.data[i].audios[k].attUrl)
                     }
 
-                    // var s1 = $("#inAdd").html().replace("$cardName$" , data.data[i].cardName)
-                    // $("#outAdd").append(text2,s1);
                 }
                 console.log(songInfo);
+                console.log(songInfo.length);
+
+                // src.substring(7,10)
+                // str.substring(0, str.indexOf("#"));
+
+                for(var p = 0;p<songInfo.length;p++){
+                    var s1 = $("#inAdd").html().replace("$NO$" , p+1).replace("$attUrl$" , songInfo[p].substring(18))
+                        .replace("$cardName$",(songInfo[p].substring(18)).substring(0, (songInfo[p].substring(18)).indexOf("/")))
+                        .replace("$audio$" , "http://www.dadpat.com"+songInfo[p]);
+                    $("#outAdd").append(s1);
+                }
+
+                $(".u-hmsprt").on("touchstart" , function (e) {
+                    console.log(e.target.getElementsByTagName("audio"))
+                    // var audio = e.target.getElementsByTagName("audio")
+                    $(e.target).find("audio")[0].play()
+                    // $(".u-hmsprt").find("audio").play()
+                })
             }
         })
     }else if(classification =="astr"){
@@ -160,7 +201,7 @@
 
     $(".back").on("click" , function () {
         console.log("123456")
-        window.location.href = "videoPlayTest.html"
+        window.location.href = "../videoPlayTest.html"
     })
 </script>
 </body>
